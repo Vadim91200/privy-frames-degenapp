@@ -9,10 +9,10 @@ const ZERO_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000000000'
 const HUB_URL = 'nemes.farcaster.xyz:2283';
 
 export enum FrameImageUrls {
-    START = '../images/Farcaster_Frame.png',
-    WALLET = '../images/Farcaster_Frame.png',
-    SUCCESS = '../images/Farcaster_Frame.png',
-    ERROR = '../images/Farcaster_Frame.png',
+    START = 'https://privy-frames-degenapp.vercel.app/frame.png',
+    WALLET = 'https://privy-frames-degenapp.vercel.app/frame.png',
+    SUCCESS = 'https://privy-frames-degenapp.vercel.app/frame.png',
+    ERROR = 'https://privy-frames-degenapp.vercel.app/frame.png',
 }
 
 export const createFrame = (imageUrl: string, buttonText: string, apiPath: string, isRedirect = false) => {
