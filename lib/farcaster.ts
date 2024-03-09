@@ -30,7 +30,7 @@ export const createFrame = (imageUrl: string, buttonText: string, apiPath: strin
 }
 
 export const createWalletFrame = (address: string) => {
-    return createFrame(FrameImageUrls.WALLET, 'Mint your NFT', `api/mint/${address}`)
+    return createFrame(FrameImageUrls.WALLET, 'Swap in Pepe', `api/swap/${address}`)
 }
 
 export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/done', true);
