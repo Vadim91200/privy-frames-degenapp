@@ -45,7 +45,7 @@ You can test this Frame using [Warpcast Embed Tools](https://warpcast.com/~/deve
 ## Check out
 - `lib/embedded-wallet.ts` to see how to use Privy to pre-generate embedded wallets for a user's Farcaster accounts
 - `lib/farcaster.ts` to see how Frames are generated and how to verify a user's Farcaster account and query the protocol for their Farcaster data
-- `lib/nft.ts` to see how to airdrop the ERC-721 you deployed to a user's wallet address
+- `lib/swap.ts` to see how to airdrop the ERC-721 you deployed to a user's wallet address
 - `api/wallet/route.ts` to see how the first Frame interaction generates an embedded wallet for the user
-- `api/mint/[address].ts` to see how the second Frame interaction airdrops an NFT to the user
+- `api/swap/[address].ts` to see how the second Frame interaction airdrops an NFT to the user
 - `contracts/FrameDrop.sol` for the sample contract used, from OpenZeppelin

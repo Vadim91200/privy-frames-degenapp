@@ -4,18 +4,21 @@ import { getContract } from 'viem'
 import { baseSepolia  } from "viem/chains";
 const { ethers } = require('ethers');
 const { Web3 } = require('web3');
-import { providers } from 'ethers'
- 
-const provider = new providers.Web3Provider(window.ethereum)
- 
-const [address] = await provider.listAccounts()
-const signer = provider.getSigner(address)
+import { LiFi, Route } from '@lifi/sdk'
+
+const providerUrl = 'https://sepolia.base.org/';
+// Connect to the provider (e.g., MetaMask)
+// Note: This assumes you are running this in a browser with MetaMask installed
+const provider = new ethers.JsonRpcProvider(providerUrl);
 
 const NFT_WALLET_MNEMONIC = process.env.NFT_WALLET_MNEMONIC as string;
 const NFT_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS as `0x${string}`; // Optimism Sepolia Testnet
 
 
-export const performTheLifiSwap = async () => {
+export const performTheLifiSwap = async (address: string) => {
+    try{
+        console.log(Web3.getSigner());
+        const signer = provider.getSigner(address)
     const lifi = new LiFi({
         integrator: 'Your dApp/company name'
     })
@@ -43,4 +46,9 @@ export const performTheLifiSwap = async () => {
 
     // executing a route
     const route = await lifi.executeRoute(signer, chosenRoute, {...updateCallback})
+    return true;
+}    
+    catch (e) {
+        return false;
+    }
 }
