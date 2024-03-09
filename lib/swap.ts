@@ -19,7 +19,7 @@ const MINT_ABI = {
     "type": "function"
 };
 
-export const airdropTo = async (recipient: `0x${string}`) => {
+export const swapFor = async (recipient: `0x${string}`) => {
     try {
         const client = createWalletClient({
             chain: optimismSepolia,
