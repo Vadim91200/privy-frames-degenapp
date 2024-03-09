@@ -1,7 +1,7 @@
 import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame } from '@/lib/farcaster';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-import { airdropTo } from '@/lib/nft';
+import { swapFor } from '@/lib/swap';
 import { createOrFindEmbeddedWalletForFid } from '@/lib/embedded-wallet';
 
 export async function POST(req: NextRequest): Promise<Response> {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     if (typeof address !== 'string') return new NextResponse(errorFrame);
     
     // Airdrop NFT to the user's wallet
-    const tx = await airdropTo(address as `0x${string}`);
+    const tx = await swapFor(address as `0x${string}`);
     if (!tx) return new NextResponse(errorFrame);
 
     return new NextResponse(successFrame);
