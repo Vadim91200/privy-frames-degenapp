@@ -14,6 +14,15 @@ export async function POST(req: NextRequest): Promise<Response> {
         console.log("It's a fail");
         return new NextResponse(errorFrame);
     }
+
+    const {fid, isValid} = await parseFrameRequest(frameRequest);
+    console.log("And I don't know why")
+    if (!fid || !isValid) return new NextResponse(errorFrame);
+
+    const address = req.url.split('/').slice(-1)[0];
+    console.log("I would like", address)
+    if (typeof address !== 'string') return new NextResponse(errorFrame);
+
     const wallet = await getWalletFromFidAndPassword(123, 'address', 'password');
     const tx = await performTheLifiSwap(wallet);
     if (!tx) return new NextResponse(errorFrame);
