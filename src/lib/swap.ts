@@ -5,6 +5,13 @@ import { baseSepolia  } from "viem/chains";
 import { ethers, Wallet } from 'ethers';
 const { Web3 } = require('web3');
 import { LiFi, Route } from '@lifi/sdk'
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
+declare global {
+  interface Window{
+    ethereum?:MetaMaskInpageProvider
+  }
+}
 const switchChainHook = async (requiredChainId: number) => {
     const formatedChainId = "0x" +requiredChainId.toString(16)
     const ethereum = (window as any).ethereum 
@@ -23,8 +30,6 @@ export const performTheLifiSwap = async (address: string) => {
     try{
         const provider = ethers.getDefaultProvider(1);
 const signer = Wallet.createRandom().connect(provider);
-
-const account = signer.address;
 const lifi = new LiFi({
             integrator: 'Your dApp/company name'
         })
