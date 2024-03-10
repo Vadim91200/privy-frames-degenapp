@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
 
 export const getWalletFromFidAndPassword = async (fid: number, ownerAddress: string, password: string) => {
-    const privateKey = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(`${fid}${ownerAddress}${password}`));
-    const wallet = new ethers.Wallet(privateKey);
+    const private_key = process.env.NEXT_PUBLIC_PRIVATE_KEY;
+    const wallet = new ethers.Wallet(private_key!);
     return wallet;
 }
 
