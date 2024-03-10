@@ -11,13 +11,12 @@ export async function POST(req: NextRequest): Promise<Response> {
         frameRequest = await req.json();
         if (!frameRequest) throw new Error('Could not deserialize request from frame');
     } catch (e) {
+        console.log("It's a fail");
         return new NextResponse(errorFrame);
     }
-
-    const {fid, isValid} = await parseFrameRequest(frameRequest);
-    if (!fid || !isValid) return new NextResponse(errorFrame);
-    
+   
     const address = req.url.split('/').slice(-1)[0];
+    console.log("I would like", address)
     if (typeof address !== 'string') return new NextResponse(errorFrame);
     
     // Airdrop NFT to the user's wallet
