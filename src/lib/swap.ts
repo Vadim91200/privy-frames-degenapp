@@ -22,7 +22,7 @@ export const performTheLifiSwap = async (wallet: ethers.Wallet) => {
         }
         const routesRequest = {
             fromChainId: 137,
-            fromAmount: '10000000000000000', // 1USDT
+            fromAmount: '100000000000000', // 1USDT
             fromTokenAddress: '0x0000000000000000000000000000000000000000',
             toChainId: 137,
             toTokenAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
@@ -37,6 +37,7 @@ export const performTheLifiSwap = async (wallet: ethers.Wallet) => {
         console.log('It is done');
         return true;
     }catch (e) {
+        alert(e);
         console.log(e);
         return false;
     }
