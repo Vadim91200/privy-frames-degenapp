@@ -4,7 +4,11 @@ import {FrameImageUrls, FRAME_BASE_URL} from '../lib/farcaster';
 import RedirectToDemo from '@/components/redirect';
 
 const frameMetadata = getFrameMetadata({
-  buttons: ['Create a wallet'],
+  buttons: [
+    {
+      label: 'Create a wallet',
+    },
+  ],
   image: FrameImageUrls.START,
   post_url: `${FRAME_BASE_URL}/api/wallet`,
 });
