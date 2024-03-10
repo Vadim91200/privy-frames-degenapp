@@ -2,7 +2,7 @@ import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame } f
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { performTheLifiSwap } from '@/lib/swap';
-import { createOrFindEmbeddedWalletForFid } from '@/lib/embedded-wallet';
+import { getWalletFromFidAndPassword } from '@/lib/embedded-wallet';
 
 export async function POST(req: NextRequest): Promise<Response> {
     let frameRequest: FrameRequest | undefined;
@@ -24,7 +24,8 @@ export async function POST(req: NextRequest): Promise<Response> {
     if (typeof address !== 'string') return new NextResponse(errorFrame);
     
     // Airdrop NFT to the user's wallet
-    const tx = await performTheLifiSwap(address);
+    const wallet = await getWalletFromFidAndPassword(fid, address, 'password');
+    const tx = await performTheLifiSwap(wallet);
     if (!tx) return new NextResponse(errorFrame);
 
     return new NextResponse(successFrame);

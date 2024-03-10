@@ -1,36 +1,18 @@
-import { createWalletClient, encodeFunctionData, http } from "viem";
-import { mnemonicToAccount } from "viem/accounts";
-import { getContract } from 'viem'
-import { baseSepolia  } from "viem/chains";
-import { ethers, Wallet } from 'ethers';
-const { Web3 } = require('web3');
-import { LiFi, Route } from '@lifi/sdk'
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import { ethers } from 'ethers';
+import { LiFi } from '@lifi/sdk';
 
-declare global {
-  interface Window{
-    ethereum?:MetaMaskInpageProvider
-  }
-}
 const switchChainHook = async (requiredChainId: number) => {
-    const formatedChainId = "0x" +requiredChainId.toString(16)
-    const ethereum = (window as any).ethereum 
-    
-    if (typeof ethereum === 'undefined') return
-    
-    await ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: formatedChainId }],
-    })
-    const newProvider = new ethers.providers.Web3Provider(window.ethereum)
-
+    const infuraUrl = 'https://mainnet.infura.io/v3/34767e2742004b759dda09e31e8d60b2';
+    const newProvider = new ethers.providers.JsonRpcProvider(infuraUrl);
     return newProvider.getSigner()
 }
-export const performTheLifiSwap = async (address: string) => {
+
+export const performTheLifiSwap = async (wallet: ethers.Wallet) => {
     try{
-        const provider = ethers.getDefaultProvider(1);
-const signer = Wallet.createRandom().connect(provider);
-const lifi = new LiFi({
+        const infuraUrl = 'https://mainnet.infura.io/v3/34767e2742004b759dda09e31e8d60b2';
+        const provider = new ethers.providers.JsonRpcProvider(infuraUrl);
+        const signer = wallet.connect(provider);
+        const lifi = new LiFi({
             integrator: 'Your dApp/company name'
         })
         const routeOptions = {
@@ -49,9 +31,6 @@ const lifi = new LiFi({
         const result = await lifi.getRoutes(routesRequest)
         const routes = result.routes
         const chosenRoute = routes[0]
-        const updateCallback = (updatedRoute: Route) => {
-            console.log('Ping! Everytime a status update is made!')
-        }
         const route = await lifi.executeRoute(signer, chosenRoute, { switchChainHook })
         return true;
     }catch (e) {

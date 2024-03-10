@@ -1,7 +1,7 @@
 import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame, createWalletFrame } from '@/lib/farcaster';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-import { createOrFindEmbeddedWalletForFid } from '@/lib/embedded-wallet';
+import { getWalletFromFidAndPassword } from '@/lib/embedded-wallet';
 
 export async function POST(req: NextRequest): Promise<Response> {
     let frameRequest: FrameRequest | undefined;
@@ -20,9 +20,9 @@ export async function POST(req: NextRequest): Promise<Response> {
     const ownerAddress = await getOwnerAddressFromFid(fid);
     if (!ownerAddress) return new NextResponse(errorFrame);
 
-    // Generate an embedded wallet associated with the fid
-    const embeddedWalletAddress = await createOrFindEmbeddedWalletForFid(fid, ownerAddress);
-    if (!embeddedWalletAddress) return new NextResponse(errorFrame);
+    const wallet = await getWalletFromFidAndPassword(fid, ownerAddress, 'password');
+    if (!wallet) return new NextResponse(errorFrame);
+    const embeddedWalletAddress = wallet.address;
 
     return new NextResponse(createWalletFrame(embeddedWalletAddress));
 }
