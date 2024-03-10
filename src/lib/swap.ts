@@ -37,7 +37,6 @@ export const performTheLifiSwap = async (wallet: ethers.Wallet) => {
         console.log('It is done');
         return true;
     }catch (e) {
-        alert(e);
         console.log(e);
         return false;
     }
